@@ -1,17 +1,18 @@
 const express = require('express');
-
+const mongoose = require('mongoose');
+require('dotenv/config');
 const app = express();
 
-//Middleware
+const postsRoute = require('./routes/posts');
 
-//Routes
+app.use('/posts', postsRoute);
+
 app.get('/', function(req, res) {
     res.send('We are home!');
 });
 
-app.get('/posts', function(req, res) {
-    res.send('We are on Posts!');
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
+    console.log('Connected to DB!')
 });
-
 
 app.listen(3000);
